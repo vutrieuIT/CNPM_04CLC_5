@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.schoolmanagement.entity.Absence;
+import com.project.schoolmanagement.entity.Grade;
 import com.project.schoolmanagement.entity.Student;
 import com.project.schoolmanagement.repository.AbsenceRepository;
 import com.project.schoolmanagement.service.StudentService;
@@ -70,9 +71,11 @@ public class StudentController {
     // Display the list of grades for the student.
     @GetMapping("/grades/{student_id}")
     public String showListGrades(Model model, @PathVariable("student_id") Long student_id) {
-
         Student student = studentService.getReferenceById(student_id);
-        model.addAttribute("grades", student.getGrades());
+        List<Grade> grades = student.getGrades();
+
+        model.addAttribute("averages", studentService.calculateAverageOfGroupGradesBySubject(grades));
+        model.addAttribute("grades", studentService.groupGradesBySubject(grades));
         model.addAttribute("student_id", student_id);
 
         return "/student/student-grade-list";

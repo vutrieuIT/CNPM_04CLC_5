@@ -1,0 +1,28 @@
+Student: đại diện cho một học sinh, bao gồm các thông tin như id, tên, email, số điện thoại, ngày sinh, giới tính và lớp (Class) học của học sinh.
+
+Teacher: đại diện cho một giáo viên, bao gồm các thông tin như id, tên, email, số điện thoại và môn học (Subject) mà giáo viên đó giảng dạy.
+
+Subject: đại diện cho một môn học, bao gồm các thông tin như id, tên, chi tiết môn học.
+
+Class: đại diện cho một lớp học, bao gồm các thông tin như id, tên, giáo viên chủ nhiệm (Teacher).
+
+Grade: đại diện cho một điểm số của một học sinh trong một môn học, bao gồm các thông tin như id, học sinh, môn học, giáo viên, điểm số và mô tả.
+
+Assign: đại diện cho sự phân công, nó nắm giữ thông tin về một lớp học(Class) được học một môn học (Subject) bởi một giáo viên (Teacher).
+
+Schedule: đại diện cho thời gian dạy học của một công việc được phân công (Assign), có thời gian bắt đầu, thời gian kết thúc.
+
+====Các mối quan hệ===
+
+Một lớp học (Class) có nhiều học sinh (Student) và một học sinh chỉ 'thuộc' về một lớp học, do đó giữa "Class" và "Student" có mối quan hệ 1-n (one-to-many).
+
+Một lớp học (Class) được 'chủ nhiệm' bởi một giáo viên (Teacher) và một giáo viên có thể 'chủ nhiệm' một lớp học hoặc không chủ nhiệm lớp nào, do đó giữa "Class" và "Teacher" có mối quan hệ 1-1 (one-to-one).
+
+Một môn học (Subject) được giảng 'dạy' bởi nhiều giáo viên (Teacher) và Một giáo viên chỉ giảng 'dạy' một môn học , do đó giữa "Subject" và "Teacher" có mối quan hệ 1-n (one-to-many).
+
+Cả ba đối tượng (Class, Subject, Teacher) đều có mối quan hệ 1-n với sự phân công (Assign). vd: Một lớp học (Class) có thể có nhiều sự phân công (Assign), và mỗi một assign thuộc về một lớp học, và với mỗi assign ta xác định được môn học (Subject) và giáo viên (Teacher).
+
+Mỗi học sinh (Student) có nhiều điểm số (Grade) và mỗi một grade là của một học sinh. Nên "Student" và "Grade" có quan hệ 1-n.
+Mỗi môn học (Subject) có nhiều điểm số (Grade) và mỗi một grade là của một môn học. Nên "Subject" và "Grade" cũng có quan hệ 1-n.
+
+Một sự phân công (Assign) có nhiều Lịch dạy (Schedule), mỗi một lịch dạy là chỉ đến một assign. vd: Khi một giáo viên được phân công dạy (Assign) thì sẽ có nhiều lịch dạy (Schedule) cho sự phân công đó. Vậy nên "Assign" và "Schedule" có quan hệ 1-n.

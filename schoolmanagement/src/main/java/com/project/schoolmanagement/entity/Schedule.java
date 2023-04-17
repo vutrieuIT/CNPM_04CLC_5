@@ -1,5 +1,7 @@
 package com.project.schoolmanagement.entity;
 
+
+import java.sql.Time;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -27,13 +29,13 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long schedule_id;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    // @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "startTime")
-    private LocalDateTime startTime;
+    private Time startTime;
     
-    @Temporal(TemporalType.TIMESTAMP)
+    // @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "endTime")
-    private LocalDateTime endTime;
+    private Time endTime;
 
     @ManyToOne(targetEntity = Assign.class)
     @JoinColumn(name = "assign_id", referencedColumnName = "assign_id", foreignKey = @ForeignKey(name = "FK_assign_schedule"))

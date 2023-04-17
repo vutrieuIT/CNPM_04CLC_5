@@ -13,25 +13,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.project.schoolmanagement.entity.Absence;
 import com.project.schoolmanagement.entity.Student;
 import com.project.schoolmanagement.repository.StudentRepository;
+import com.project.schoolmanagement.service.AccountService;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private AccountService accountService;
 
+    @GetMapping("/")
+    public String showHomePage() {
+        return "home2";
+    }
     // @Autowired
     // private AbsenceRepository absenceRepository;
 
-    @GetMapping("home")
-    public String showFormHome(Model model) {
-        model.addAttribute("name", "World");
-        return "home";
-    }
-
     @GetMapping("login")
-    public String showFormLoginForType(Model model) {
-        model.addAttribute("name", "World");
+    public String showFormLoginForType() {
         return "login";
     }
 
@@ -39,12 +39,37 @@ public class HomeController {
     public String handleLoginSubmit(
             @RequestParam String username,
             @RequestParam String password,
+            @RequestParam("userType") String userType,
             Model model) {
-        if (username.equals("admin") && password.equals("admin")) {
-            return "redirect:/home";
+
+        if (userType.equals("student")) {
+            if (accountService.studentLogin(username, password)) {
+                return "redirect:/student/student-home";
+            } else {
+                model.addAttribute("message", "Tài khoản không tồn tại!");
+                return "redirect:/login";
+            }
+        } else if (userType.equals("teacher")) {
+            if (accountService.teacherLogin(username, password)) {
+                return "redirect:/home";
+            } else {
+                return "redirect:/login";
+            }
+        } else if (userType.equals("admin")) {
+            if (accountService.adminLogin(username, password)) {
+                return "redirect:/home";
+            } else {
+                return "redirect:/login";
+            }
         } else {
             return "redirect:/login";
         }
+
+        // if (username.equals("admin") && password.equals("admin")) {
+        // return "redirect:/home";
+        // } else {
+        // return "redirect:/login";
+        // }
     }
 
     @GetMapping("test")

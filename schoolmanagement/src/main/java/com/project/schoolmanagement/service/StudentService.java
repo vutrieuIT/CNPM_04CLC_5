@@ -19,4 +19,6 @@ public interface StudentService {
     Map<String, List<Grade>> groupGradesBySubject(List<Grade> grades);
 
     Map<String, Double> calculateAverageOfGroupGradesBySubject(List<Grade> grades);
+
+    Student findStudentByUsernameAndPassword(String username, String password);
 }

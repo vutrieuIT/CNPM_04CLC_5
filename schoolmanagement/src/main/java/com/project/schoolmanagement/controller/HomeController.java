@@ -25,7 +25,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String showHomePage() {
-        return "home2";
+        return "home";
     }
     // @Autowired
     // private AbsenceRepository absenceRepository;
@@ -44,24 +44,27 @@ public class HomeController {
 
         if (userType.equals("student")) {
             if (accountService.studentLogin(username, password)) {
-                return "redirect:/student/student-home";
+                return "student/student-home";
             } else {
-                model.addAttribute("message", "Tài khoản không tồn tại!");
-                return "redirect:/login";
+                model.addAttribute("message_error", "Tài khoản không tồn tại!");
+                return "login";
             }
         } else if (userType.equals("teacher")) {
             if (accountService.teacherLogin(username, password)) {
-                return "redirect:/home";
+                // TODO: redirect to teacher home page
+                return "home";
             } else {
-                return "redirect:/login";
+                model.addAttribute("message_error", "Tài khoản không tồn tại!");
+                return "login";
             }
         } else if (userType.equals("admin")) {
             if (accountService.adminLogin(username, password)) {
-                return "redirect:/home";
+                return "home";
             } else {
-                return "redirect:/login";
+                return "login";
             }
         } else {
+            model.addAttribute("message_error", "Lỗi");
             return "redirect:/login";
         }
 

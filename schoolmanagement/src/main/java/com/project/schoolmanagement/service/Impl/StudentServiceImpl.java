@@ -16,16 +16,16 @@ import com.project.schoolmanagement.service.StudentService;
 public class StudentServiceImpl implements StudentService {
 
     @Autowired
-    StudentRepository repo;
+    StudentRepository studentRepository;
 
     @Override
     public Student getReferenceById(Long student_id) {
-        return repo.getReferenceById(student_id);
+        return studentRepository.getReferenceById(student_id);
     }
 
     @Override
     public void save(Student student) {
-        repo.save(student);
+        studentRepository.save(student);
     }
 
     @Override
@@ -44,6 +44,20 @@ public class StudentServiceImpl implements StudentService {
         return grades.stream()
                 .collect(Collectors.groupingBy(g -> g.getSubject().getName(),
                         Collectors.averagingDouble(Grade::getPoint)));
+    }
+
+    public Student findStudentByUsernameAndPassword(String username, String password) {
+        // Duyệt qua danh sách các Student trong students
+        List<Student> students = studentRepository.findAll();
+        for (Student student : students) {
+            // Nếu tìm thấy student tương ứng với username và password
+            if(student.getUsername().equals(username) && student.getPassword().equals(password)) {
+                // Trả về student đó
+                return student;
+            }
+        }
+        // Nếu không tìm thấy student tương ứng, trả về null
+        return null;
     }
 
 }

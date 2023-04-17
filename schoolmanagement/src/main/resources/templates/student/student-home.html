@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>HOME PAGE</title>
+    <title>STUDENT HOME PAGE</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,9 +14,8 @@
 </head>
 
 <body>
-    <header>
-        <!-- place navbar here -->
-    </header>
+    <div th:insert="fragments/components :: header"></div>
+
     <main>
         <div class="alert alert-success" th:if="${message}">
             <span th:text="${message}"></span>

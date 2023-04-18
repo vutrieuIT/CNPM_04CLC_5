@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.project.schoolmanagement.entity.Absence;
 import com.project.schoolmanagement.entity.Student;
 import com.project.schoolmanagement.repository.StudentRepository;
 import com.project.schoolmanagement.service.AccountService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/")
@@ -24,7 +28,7 @@ public class HomeController {
     private AccountService accountService;
 
     @GetMapping("/")
-    public String showHomePage() {
+    public String showBase() {
         return "home";
     }
     // @Autowired
@@ -40,14 +44,17 @@ public class HomeController {
             @RequestParam String username,
             @RequestParam String password,
             @RequestParam("userType") String userType,
-            Model model) {
+            Model model,
+            RedirectAttributes ra) {
 
         if (userType.equals("student")) {
             if (accountService.studentLogin(username, password)) {
-                return "student/student-home";
+                return "redirect:/student/home/1";
             } else {
-                model.addAttribute("message_error", "Tài khoản không tồn tại!");
-                return "login";
+                // ra.addFlashAttribute("param.message", "Tài khoản không tồn tại!");
+
+                ra.addFlashAttribute("message", "Tài khoản không tồn tại!");
+                return "redirect:/#login";
             }
         } else if (userType.equals("teacher")) {
             if (accountService.teacherLogin(username, password)) {

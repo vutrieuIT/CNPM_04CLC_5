@@ -28,7 +28,7 @@ public class StudentController {
     @Autowired
     private AbsenceRepository absenceRepository;
 
-    @GetMapping("/home")
+    @GetMapping("/home/{student_id}")
     public String showStudentHome() {
         return "student/student-home";
     }

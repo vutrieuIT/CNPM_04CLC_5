@@ -1,38 +1,18 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <title>PageTitle</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" th:href="@{css/home_style.css}" />
-</head>
-
-<body>
-    <div class="container" th:fragment="login">
+<section th:fragment="login" id="login">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="card border-success border-5">
+                <div class="card border border-success mb-2">
                     <div class="card-body">
                         <!-- Logo Image -->
                         <div class="text-center mb-4">
-                            <a th:href="@{/}">
-                                <img src="./assets/img/avataaars.svg" alt="Logo" height="150">
-                            </a>
+                            <img src="./assets/img/avataaars.svg" alt="Logo" height="150">
                         </div>
                         <h3 class="text-center mb-4 text-body fw-bold">Đăng nhập</h3>
                         <!-- Alert Message -->
-                        <div class="alert alert-danger" th:if="${message_error}">
-                            <span th:text="${message_error}"></span>
-                        </div>
+                        <div th:replace="~{fragments/alert.html :: alert-danger}"></div>
                         <!-- POST FORM -->
-                        <form th:action="@{/login}" method="post" class="text-body w-50 mx-auto">
+                        <form th:action="@{/login}" method="post" class="text-body">
                             <div class="form-floating">
                                 <input type="text" name="username" class="form-control fw-bolder" id="floatingInput"
                                     placeholder="name@example.com">
@@ -44,13 +24,13 @@
                                 <label for="floatingPassword">Password</label>
                             </div>
                             <!-- <div class="checkbox mb-3">
-                                <label>
-                                    <input type="checkbox" value="remember-me"> Remember me
-                                </label>
-                            </div> -->
-
-                            <div class="btn-group" data-bs-toggle="buttons">
-                                <label class="btn active">
+                                    <label>
+                                        <input type="checkbox" value="remember-me"> Remember me
+                                    </label>
+                                </div> -->
+    
+                            <div class="btn-group my-2" data-bs-toggle="buttons">
+                                <label class="btn">
                                     <input type="radio" name="userType" id="student" value="student" autocomplete="off"
                                         class="me-2" checked> Học sinh
                                 </label>
@@ -62,7 +42,7 @@
                             <button class="w-100 btn btn-lg btn-outline-success text-dark" type="submit">Đăng
                                 nhập</button>
                         </form>
-                        <div class="d-flex align-items-center justify-content-center pb-4 text-body mt-4">
+                        <div class="d-flex align-items-center justify-content-center text-body mt-4">
                             <p class="mb-0 me-2">Không có tài khoản?</p>
                             <button type="button" class="btn btn-outline-danger disabled">Tạo mới</button>
                         </div>
@@ -71,11 +51,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous">
-        </script>
-</body>
-
-</html>
+</section>

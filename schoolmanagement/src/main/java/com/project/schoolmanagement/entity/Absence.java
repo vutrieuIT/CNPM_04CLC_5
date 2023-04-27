@@ -36,8 +36,7 @@ public class Absence {
     private String reason;
 
     // relationship with student
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "student_id", nullable = false, foreignKey = @ForeignKey(name = "FK_student_absence"))
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Student.class)
+    @JoinColumn(name = "student_id", referencedColumnName = "student_id", nullable = false, foreignKey = @ForeignKey(name = "FK_student_absence"))
     private Student student;
-
 }

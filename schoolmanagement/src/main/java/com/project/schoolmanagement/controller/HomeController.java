@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.project.schoolmanagement.entity.Absence;
 import com.project.schoolmanagement.entity.Student;
 import com.project.schoolmanagement.repository.StudentRepository;
-import com.project.schoolmanagement.service.AccountService;
+import com.project.schoolmanagement.service.IAccountService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/")
@@ -25,61 +25,62 @@ public class HomeController {
     @Autowired
     private StudentRepository studentRepository;
     @Autowired
-    private AccountService accountService;
+    private IAccountService accountService;
 
     @GetMapping("/")
-    public String showBase() {
+    public String showHome(Model model) {
+        model.addAttribute("pageTitle", "Home Page");
+        // model.addAttribute("pageContent", "Welcome to our website!");
+        model.addAttribute("content", "home");
+        System.out.println("Get mapping '/'");
         return "home";
+    }
+
+    @GetMapping("/logout")
+    public String logout(RedirectAttributes ra, HttpSession session) {
+        session.invalidate();
+        ra.addFlashAttribute("message", "Đăng xuất thành công!");
+        return "redirect:/";
     }
     // @Autowired
     // private AbsenceRepository absenceRepository;
 
-    @GetMapping("login")
-    public String showFormLoginForType() {
-        return "login";
-    }
-
-    @PostMapping("login")
+    @PostMapping("/login")
     public String handleLoginSubmit(
             @RequestParam String username,
             @RequestParam String password,
             @RequestParam("userType") String userType,
-            Model model,
-            RedirectAttributes ra) {
+            RedirectAttributes ra,
+            HttpServletRequest request) {
+        try {
 
-        if (userType.equals("student")) {
-            if (accountService.studentLogin(username, password)) {
-                return "redirect:/student/home/1";
+            if (userType.equals("student")) {
+                Student student = accountService.studentLogin(username, password);
+                if (student != null) {
+                    System.out.println("username + pass: " + username + ", " + password);
+                    System.out.println("student Username: " + student.getUsername());
+                    System.out.println("student Password: " + student.getPassword());
+                    System.out.println("student ID: " + student.getStudent_id());
+                    System.out.println("STUDENT NOT NULL");
+
+                    HttpSession session = request.getSession();
+                    session.setAttribute("student", student);
+
+                    return "redirect:/student/home";
+                } else {
+                    ra.addFlashAttribute("message_error", "Tài khoản sinh viên không tồn tại!");
+                    return "redirect:/#login";
+                }
             } else {
-                // ra.addFlashAttribute("param.message", "Tài khoản không tồn tại!");
-
-                ra.addFlashAttribute("message", "Tài khoản không tồn tại!");
+                // TODO: Handle login for teacher
+                // ra.addFlashAttribute("message_error", "Tài khoản giáo viên không tồn tại!");
+                ra.addFlashAttribute("message_error", "Chưa xử lý đăng nhập giáo viên");
                 return "redirect:/#login";
             }
-        } else if (userType.equals("teacher")) {
-            if (accountService.teacherLogin(username, password)) {
-                // TODO: redirect to teacher home page
-                return "home";
-            } else {
-                model.addAttribute("message_error", "Tài khoản không tồn tại!");
-                return "login";
-            }
-        } else if (userType.equals("admin")) {
-            if (accountService.adminLogin(username, password)) {
-                return "home";
-            } else {
-                return "login";
-            }
-        } else {
-            model.addAttribute("message_error", "Lỗi");
-            return "redirect:/login";
+        } catch (Exception e) {
+            ra.addFlashAttribute("message_error", "Lỗi đăng nhập");
+            return "redirect:/#login";
         }
-
-        // if (username.equals("admin") && password.equals("admin")) {
-        // return "redirect:/home";
-        // } else {
-        // return "redirect:/login";
-        // }
     }
 
     @GetMapping("test")

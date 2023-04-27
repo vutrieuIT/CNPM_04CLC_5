@@ -1,13 +1,13 @@
-// package com.project.schoolmanagement;
+package com.project.schoolmanagement;
 
-// import org.junit.jupiter.api.Test;
-// import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-// @SpringBootTest
-// class SchoolmanagementApplicationTests {
+@SpringBootTest
+class SchoolmanagementApplicationTests {
 
-// 	@Test
-// 	void contextLoads() {
-// 	}
+	@Test
+	void contextLoads() {
+	}
 
-// }
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quan ly diem</title>
+    <!-- Bootstrap CSS v5.2.1 -->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"-->
+<!--          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">-->
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header th:replace="~{fragments/navigation-teacher.html :: navigation}"></header>
+
+    <div class="masthead bg-primary text-white text-center">
+        <main>
+            <h1>quan ly diem</h1>
+            <div th:each="lop : ${danhSachLop}">
+                <a>
+                    <button class="btn btn-secondary" >
+                        [[${lop.name}]]
+                    </button>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <div th:replace="~{fragments/copyright.html :: copyright}"/>
+</body>
+</html>

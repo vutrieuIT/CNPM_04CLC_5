@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Giao Vien</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+</head>
+<body>
+    <div>
+        <nav th:replace="~{fragments/navigation-teacher.html :: navigation}"/>
+    </div>
+    <div class="masthead bg-primary text-white text-center">
+        <main>
+            <a th:href="@{/giao-vien/quan-ly-diem}">
+                <button class="btn btn-secondary" >
+                    quan ly diem
+                </button>
+            </a>
+        </main>
+    </div>
+    <div>
+        <footer th:replace="~{fragments/copyright.html :: copyright}"/>
+    </div>
+</body>
+</html>

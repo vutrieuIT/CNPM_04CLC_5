@@ -43,4 +43,11 @@ public class Class {
 
     // @OneToMany(mappedBy = "clazz")
     // private List<Subject> subjects;
+
+    // map object to entity
+
+    public Class(Object[] res) {
+        this.class_id = (Long) res[0];
+        this.name = (String) res[1];
+    }
 }

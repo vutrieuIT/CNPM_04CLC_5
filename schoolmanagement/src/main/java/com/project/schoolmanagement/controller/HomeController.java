@@ -59,7 +59,8 @@ public class HomeController {
         } else if (userType.equals("teacher")) {
             if (accountService.teacherLogin(username, password)) {
                 // TODO: redirect to teacher home page
-                return "home";
+
+                return "redirect:/giao-vien";
             } else {
                 model.addAttribute("message_error", "Tài khoản không tồn tại!");
                 return "login";

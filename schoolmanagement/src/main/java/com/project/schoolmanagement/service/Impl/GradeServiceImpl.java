@@ -6,7 +6,7 @@ import com.project.schoolmanagement.entity.Subject;
 import com.project.schoolmanagement.repository.GradeRepository;
 import com.project.schoolmanagement.repository.StudentRepository;
 import com.project.schoolmanagement.repository.SubjectRepository;
-import com.project.schoolmanagement.service.GradeService;
+import com.project.schoolmanagement.service.IGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GradeServiceImpl implements GradeService {
+public class GradeServiceImpl implements IGradeService {
 
     @Autowired
     private GradeRepository gradeRepository;

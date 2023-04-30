@@ -10966,7 +10966,9 @@ html {
   font-size: 1.5rem;
   color: #6c757d;
 }
-
+.head-sm {
+  padding-top: calc(3rem + 74px);
+}
 .masthead {
   padding-top: calc(6rem + 74px);
   padding-bottom: 6rem;

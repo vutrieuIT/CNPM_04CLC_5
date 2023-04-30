@@ -2,33 +2,28 @@ package com.project.schoolmanagement.controller;
 
 import com.project.schoolmanagement.dto.ClassSubjectByTeacherIdDTO;
 import com.project.schoolmanagement.dto.GradeDTO;
-import com.project.schoolmanagement.entity.Class;
 import com.project.schoolmanagement.entity.Teacher;
 import com.project.schoolmanagement.form.GradeForm;
-import com.project.schoolmanagement.repository.GradeRepository;
-import com.project.schoolmanagement.service.GradeService;
-import com.project.schoolmanagement.service.TeacherService;
+import com.project.schoolmanagement.service.IGradeService;
+import com.project.schoolmanagement.service.ITeacherService;
 import jakarta.servlet.http.HttpSession;
-import jogamp.nativewindow.windows.GDI;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/giao-vien")
 public class TeacherController {
 
     @Autowired
-    private TeacherService teacherService;
+    private ITeacherService ITeacherService;
 
     @Autowired
-    private GradeService gradeService;
+    private IGradeService gradeService;
     @GetMapping()
     public String home(){
 
@@ -38,7 +33,7 @@ public class TeacherController {
     public String getClassList(Model model, HttpSession session){
         Teacher teacher = (Teacher) session.getAttribute("teacher");
         List<ClassSubjectByTeacherIdDTO> dslop = new ArrayList<>();
-        dslop = teacherService.getDanhSachLop(teacher.getTeacher_id());
+        dslop = ITeacherService.getDanhSachLop(teacher.getTeacher_id());
         model.addAttribute("teacher", teacher);
         model.addAttribute("danhSach",dslop);
         return "/teacher/score";

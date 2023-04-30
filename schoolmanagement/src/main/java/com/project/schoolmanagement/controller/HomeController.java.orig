@@ -20,7 +20,6 @@ import com.project.schoolmanagement.repository.StudentRepository;
 import com.project.schoolmanagement.service.IAccountService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/")
@@ -31,7 +30,7 @@ public class HomeController {
     private IAccountService accountService;
 
     @Autowired
-    private ITeacherService teacherService;
+    private ITeacherService ITeacherService;
 
     @GetMapping("/")
     public String showHome(Model model) {
@@ -48,17 +47,24 @@ public class HomeController {
         ra.addFlashAttribute("message", "Đăng xuất thành công!");
         return "redirect:/";
     }
+    // @Autowired
+    // private AbsenceRepository absenceRepository;
 
     @PostMapping("/login")
     public String handleLoginSubmit(
             @RequestParam String username,
             @RequestParam String password,
             @RequestParam("userType") String userType,
+<<<<<<< HEAD
             Model model,
             RedirectAttributes ra,
-            HttpSession session,
+            HttpSession session) {
+=======
+            RedirectAttributes ra,
             HttpServletRequest request) {
         try {
+>>>>>>> 09c4750474d912e8252d5aa96211314a09648393
+
             if (userType.equals("student")) {
                 Student student = accountService.studentLogin(username, password);
                 if (student != null) {
@@ -68,7 +74,7 @@ public class HomeController {
                     System.out.println("student ID: " + student.getStudent_id());
                     System.out.println("STUDENT NOT NULL");
 
-                    session = request.getSession();
+                    HttpSession session = request.getSession();
                     session.setAttribute("student", student);
 
                     return "redirect:/student/home";
@@ -76,33 +82,39 @@ public class HomeController {
                     ra.addFlashAttribute("message_error", "Tài khoản sinh viên không tồn tại!");
                     return "redirect:/#login";
                 }
+            } else {
+                // TODO: Handle login for teacher
+                // ra.addFlashAttribute("message_error", "Tài khoản giáo viên không tồn tại!");
+                ra.addFlashAttribute("message_error", "Chưa xử lý đăng nhập giáo viên");
+                return "redirect:/#login";
             }
-
-            if (userType.equals("teacher")) {
-                if (accountService.teacherLogin(username, password)) {
-                    // TODO: redirect to teacher home page
-                    Teacher teacher = teacherService.login(username, password);
-                    ra.addFlashAttribute("teacher", teacher);
-                    session.setAttribute("teacher", teacher);
-                    return "redirect:/giao-vien";
-                } else {
-                    model.addAttribute("message_error", "Tài khoản không tồn tại!");
-                    return "redirect:/#login";
-                }
+<<<<<<< HEAD
+        } else if (userType.equals("teacher")) {
+            if (accountService.teacherLogin(username, password)) {
+                // TODO: redirect to teacher home page
+                Teacher teacher = ITeacherService.login(username,password);
+                ra.addFlashAttribute("teacher", teacher);
+                session.setAttribute("teacher", teacher);
+                return "redirect:/giao-vien";
+            } else {
+                model.addAttribute("message_error", "Tài khoản không tồn tại!");
+                return "login";
             }
-
-            if (userType.equals("admin")) {
-                if (accountService.adminLogin(username, password)) {
-                    return "home";
-                } else {
-                    return "redirect:/#login";
-                }
+        } else if (userType.equals("admin")) {
+            if (accountService.adminLogin(username, password)) {
+                return "home";
+            } else {
+                return "login";
             }
+        } else {
+            model.addAttribute("message_error", "Lỗi");
+            return "redirect:/login";
+=======
         } catch (Exception e) {
             ra.addFlashAttribute("message_error", "Lỗi đăng nhập");
             return "redirect:/#login";
+>>>>>>> 09c4750474d912e8252d5aa96211314a09648393
         }
-        return username;
     }
 
     @GetMapping("test")

@@ -14,35 +14,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.project.schoolmanagement.entity.Absence;
 import com.project.schoolmanagement.entity.Grade;
 import com.project.schoolmanagement.entity.Student;
-import com.project.schoolmanagement.repository.AbsenceRepository;
-import com.project.schoolmanagement.service.StudentService;
+import com.project.schoolmanagement.service.IAbsenceService;
+import com.project.schoolmanagement.service.IStudentService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/student")
 public class StudentController {
 
     @Autowired
-    private StudentService studentService;
-
+    private IStudentService studentService;
     // !!!
     @Autowired
-    private AbsenceRepository absenceRepository;
+    private IAbsenceService absenceService;
 
-    @GetMapping("/home/{student_id}")
-    public String showStudentHome() {
+    @GetMapping("/home")
+    public String showStudentHome(Model model, HttpSession session) {
+        model.addAttribute("content", "student/student-home");
+        model.addAttribute("pageTitle", "Student Home");
+        // Student student = (Student) session.getAttribute("student");
+        // System.out.println(student);
         return "student/student-home";
     }
 
     // Return the list of days the student was absent.
-    @GetMapping("/absences/{student_id}")
-    public String showListAbsences(Model model, @PathVariable("student_id") Long student_id) {
+    @GetMapping("/absences/list")
+    public String showListAbsences(Model model, HttpSession session) {
+        try {
+            Student student = (Student) session.getAttribute("student");
+            try {
+                List<Absence> list_absence = absenceService.getAllAbsencesOfStudent(student);
+                model.addAttribute("absences", list_absence);
+                model.addAttribute("student_id", student.getStudent_id());
 
-        Student student = studentService.getReferenceById(student_id);
-        List<Absence> list_absence = student.getAbsences();
-        model.addAttribute("absences", list_absence);
-        model.addAttribute("student_id", student_id);
+                model.addAttribute("content", "student/student-absence-list");
+                System.out.println("showListAbsences  SUCCESS");
+                return "student/student-absence-list";
+            } catch (Exception e) {
+                System.out.println("Error in getAbsences()");
+                return "redirect:/student/home";
+            }
+            
+        } catch (Exception e) {
+            return "redirect:/student/home";
+        }
 
-        return "/student/student-absence-list";
     }
 
     // Display the form for entering additional information about absences.
@@ -51,7 +68,7 @@ public class StudentController {
         Absence absence = new Absence();
         model.addAttribute("absence", absence);
         model.addAttribute("student_id", student_id);
-
+        model.addAttribute("content", "student/student-absence-form");
         return "/student/student-absence-form";
     }
 
@@ -63,9 +80,9 @@ public class StudentController {
             Model model) {
 
         absence.setStudent(studentService.getReferenceById(student_id));
-        absenceRepository.save(absence);
+        absenceService.save(absence);
 
-        return "redirect:/student/absences/" + student_id;
+        return "redirect:/student/absences/list";
     }
 
     // Display the list of grades for the student.
@@ -80,5 +97,5 @@ public class StudentController {
 
         return "/student/student-grade-list";
     }
-    
+
 }

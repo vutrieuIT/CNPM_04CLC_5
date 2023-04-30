@@ -2,35 +2,33 @@ package com.project.schoolmanagement.service.Impl;
 
 import com.project.schoolmanagement.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.project.schoolmanagement.entity.Student;
-import com.project.schoolmanagement.service.AccountService;
-import com.project.schoolmanagement.service.StudentService;
+import com.project.schoolmanagement.service.IAccountService;
+import com.project.schoolmanagement.service.IStudentService;
 
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl implements IAccountService {
     @Autowired
-    private StudentService studentService;
+    private IStudentService studentService;
 
     @Autowired
     private TeacherRepository teacherRepository;
 
     @Override
-    public boolean studentLogin(String username, String password) {
-        // ! Tài khoản mặc định
-        if (username.equals("st") && password.equals("st")) {
-            return true;
-        }
+    public Student studentLogin(String username, String password) {
+        
 
         // Tìm kiếm student với username và password tương ứng trong StudentRepository
         Student student = studentService.findStudentByUsernameAndPassword(username, password);
         // Nếu student tồn tại, trả về true
         if (student != null) {
-            return true;
+            return student;
         }
         // Nếu không tìm thấy student tương ứng, trả về false
-        return false;
+        return null;
     }
 
     @Override

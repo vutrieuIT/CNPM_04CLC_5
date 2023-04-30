@@ -1,59 +1,28 @@
+<!-- home.html -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/common/layout :: layout}">
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>School Management</title>
-    <!-- Favicon-->
-    <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
-    <!-- <link type="image/png" sizes="96x96" rel="icon" href="assets/star.png"> -->
-    <link type="image/png" sizes="96x96" rel="icon" th:href="@{/assets/search.png}">
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
-        type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css" />
+<head></head>
 
-</head>
+<body>
+    <main th:fragment="content">
+        <!-- Masthead Header -->
+        <div th:replace="~{fragments/common/header :: masthead}"></div>
 
-<body id="page-top">
-    <!-- Navigation-->
-    <div th:replace="~{fragments/navigation.html :: navigation}"></div>
+        <!-- About Section-->
+        <div th:replace="~{fragments/common/about :: content}"></div>
 
-    <!-- Masthead Header -->
-    <div th:replace="fragments/header.html :: masthead"></div>
+        <!-- Contact Section-->
+        <div th:replace="~{fragments/common/contact :: content}"></div>
 
-    <main>
-        <!-- Child templates will populate this section -->
-        <section th:fragment="content"></section>
+        <!-- Login -->
+        <div th:replace="~{fragments/common/login :: content}"></div>
+
+        <!-- Footer-->
+        <div th:replace="~{fragments/common/footer :: footer}"></div>
+        <!-- Copyright -->
+        <div th:replace="~{fragments/common/copyright :: copyright}"></div>
     </main>
-    <!-- About Section-->
-    <div th:replace="~{fragments/about.html :: content}"></div>
-    <!-- Contact Section-->
-    <div th:replace="~{fragments/contact.html :: content}"></div>
-    <!-- Login -->
-    <div th:replace="~{fragments/login.html :: login}"></div>
-    <!-- Footer-->
-    <div th:replace="~{fragments/footer.html :: footer}"></div>
-
-    <!-- Copyright -->
-    <div th:replace="~{fragments/copyright.html :: copyright}"></div>
-
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <!-- * *                               SB Forms JS                               * *-->
-    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 
 </html>

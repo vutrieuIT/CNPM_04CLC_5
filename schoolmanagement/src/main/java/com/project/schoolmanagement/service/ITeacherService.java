@@ -6,7 +6,7 @@ import com.project.schoolmanagement.entity.Teacher;
 
 import java.util.List;
 
-public interface TeacherService {
+public interface ITeacherService {
 
     Teacher login(String username, String password);
     List<Class> getDSLop(Long id);

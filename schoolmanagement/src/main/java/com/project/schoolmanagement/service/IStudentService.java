@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project.schoolmanagement.entity.Grade;
 import com.project.schoolmanagement.entity.Student;
 
-@Service
-public interface StudentService {
+public interface IStudentService {
     Student getReferenceById(Long student_id);
 
     void save(Student student);

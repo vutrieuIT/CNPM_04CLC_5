@@ -1,24 +1,14 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/common/layout :: layout}">
 
 <head>
-    <title>Absence Form</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS v5.2.1 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-
 </head>
 
 <body>
-    <header>
-        <!-- place navbar here -->
-    </header>
-    <main>
-        <div class="container w-25 mx-auto">
+    <main th:fragment="content">
+        <div class="container w-25 mx-auto head-sm">
+            <h2>Thông tin xin nghỉ</h2>
+            <hr>
             <form action="#" th:action="@{/student/absences/{id}/add (id=${student_id})}" th:object="${absence}" method="post" class="was-validated">
                 <input type="hidden" name="" th:field="*{absence_id}" th:value="${absence.absence_id}">
                 <div class="mb-3">

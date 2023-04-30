@@ -3,6 +3,8 @@ package com.project.schoolmanagement.entity;
 import java.sql.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,6 +35,7 @@ import lombok.NoArgsConstructor;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "student_id")
     private Long student_id;
 
     @Column(name = "name")
@@ -60,8 +63,6 @@ public class Student {
     @Column(name = "password")
     private String password;
 
-    
-
     //relationship with Class entity
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "class_id", referencedColumnName = "class_id", foreignKey = @ForeignKey(name = "FK_classes_students"))
@@ -72,7 +73,8 @@ public class Student {
     private List<Grade> grades;
 
     //relationship with Absence entity
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER, targetEntity = Absence.class)
+    @JsonIgnore
     private List<Absence> absences;
 
     public enum Gender {

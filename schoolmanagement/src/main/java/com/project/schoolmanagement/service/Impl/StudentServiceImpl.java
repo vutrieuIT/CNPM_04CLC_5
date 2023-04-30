@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import com.project.schoolmanagement.entity.Grade;
 import com.project.schoolmanagement.entity.Student;
 import com.project.schoolmanagement.repository.StudentRepository;
-import com.project.schoolmanagement.service.StudentService;
+import com.project.schoolmanagement.service.IStudentService;
 
 @Service
-public class StudentServiceImpl implements StudentService {
+public class StudentServiceImpl implements IStudentService {
 
     @Autowired
     StudentRepository studentRepository;

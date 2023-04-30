@@ -5,16 +5,15 @@ import com.project.schoolmanagement.entity.Class;
 import com.project.schoolmanagement.entity.Teacher;
 import com.project.schoolmanagement.repository.ClassRepository;
 import com.project.schoolmanagement.repository.TeacherRepository;
-import com.project.schoolmanagement.service.TeacherService;
+import com.project.schoolmanagement.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-public class TeacherServiceImpl implements TeacherService {
+public class TeacherServiceImpl implements ITeacherService {
 
     @Autowired
     private ClassRepository classRepository;

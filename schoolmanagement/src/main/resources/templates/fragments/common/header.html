@@ -2,9 +2,7 @@
 <header th:fragment="masthead" class="masthead bg-primary text-white text-center" id="home">
     <div class="container d-flex align-items-center flex-column">
         <!-- Alert Message -->
-        <div th:replace="~{fragments/alert.html :: alert}"></div>
-        <h1 th:if="${pageTitle != null}" th:text="${pageTitle}"></h1>
-        <h1 th:else> Default Page Title </h1>
+        <div th:replace="~{fragments/alert :: alert}"></div>
         <!-- Masthead Avatar Image-->
         <img class="masthead-avatar mb-5" src="/assets/img/avataaars.svg" alt="..." />
         <!-- Masthead Heading-->

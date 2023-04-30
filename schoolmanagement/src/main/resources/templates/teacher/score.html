@@ -4,27 +4,36 @@
     <meta charset="UTF-8">
     <title>Quan ly diem</title>
     <!-- Bootstrap CSS v5.2.1 -->
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"-->
-<!--          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">-->
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"-->
+    <!--          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">-->
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-    <header th:replace="~{fragments/navigation-teacher.html :: navigation}"></header>
+<header th:replace="~{fragments/navigation-teacher.html :: navigation}"></header>
 
-    <div class="masthead bg-primary text-white text-center">
-        <main>
-            <h1>quan ly diem</h1>
-            <div th:each="lop : ${danhSachLop}">
-                <a>
-                    <button class="btn btn-secondary" >
-                        [[${lop.name}]]
-                    </button>
-                </a>
-            </div>
-        </main>
-    </div>
+<div class="masthead bg-primary text-white text-center align-content-center">
+    <main class="align-content-center">
+        <h1>quan ly diem</h1>
+        <table class="table table-bordered">
+            <tr>
+                <th>Môn học</th>
+                <th>lớp</th>
+                <th>quản lý</th>
+            </tr>
+            <tr th:each="data : ${danhSach}">
+                <td>[[${data.subjectName}]]</td>
+                <td>[[${data.className}]]</td>
+                <td>
+                    <a th:href="@{/giao-vien/quan-ly-diem/danh-sach(class_id=${data.class_id}, subject_id=${data.subject_id})}">
+                        <button class="btn btn-secondary">Quản Lý</button>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </main>
+</div>
 
-    <div th:replace="~{fragments/copyright.html :: copyright}"/>
+<div th:replace="~{fragments/copyright.html :: copyright}"/>
 </body>
 </html>

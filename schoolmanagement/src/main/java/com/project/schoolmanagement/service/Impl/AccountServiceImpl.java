@@ -1,5 +1,6 @@
 package com.project.schoolmanagement.service.Impl;
 
+import com.project.schoolmanagement.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,9 @@ import com.project.schoolmanagement.service.StudentService;
 public class AccountServiceImpl implements AccountService {
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     @Override
     public boolean studentLogin(String username, String password) {
@@ -31,7 +35,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean teacherLogin(String username, String password) {
-        if (username.equals("teacher") && password.equals("teacher")) {
+        if (teacherRepository.findByUsernameAndPassword(username,password) != null) {
             return true;
         } else {
             return false;

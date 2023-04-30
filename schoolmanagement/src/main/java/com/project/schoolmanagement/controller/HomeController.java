@@ -2,6 +2,10 @@ package com.project.schoolmanagement.controller;
 
 import java.util.List;
 
+import com.project.schoolmanagement.entity.Teacher;
+import com.project.schoolmanagement.repository.TeacherRepository;
+import com.project.schoolmanagement.service.TeacherService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +31,9 @@ public class HomeController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private TeacherService teacherService;
+
     @GetMapping("/")
     public String showBase() {
         return "home";
@@ -45,7 +52,8 @@ public class HomeController {
             @RequestParam String password,
             @RequestParam("userType") String userType,
             Model model,
-            RedirectAttributes ra) {
+            RedirectAttributes ra,
+            HttpSession session) {
 
         if (userType.equals("student")) {
             if (accountService.studentLogin(username, password)) {
@@ -59,7 +67,9 @@ public class HomeController {
         } else if (userType.equals("teacher")) {
             if (accountService.teacherLogin(username, password)) {
                 // TODO: redirect to teacher home page
-
+                Teacher teacher = teacherService.login(username,password);
+                ra.addFlashAttribute("teacher", teacher);
+                session.setAttribute("teacher", teacher);
                 return "redirect:/giao-vien";
             } else {
                 model.addAttribute("message_error", "Tài khoản không tồn tại!");

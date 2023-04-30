@@ -1,0 +1,20 @@
+<form th:action="@{/save}" method="post" th:object="${contactForm}">
+  <table>
+    <tr>
+      <th>No.</th>
+      <th>Name</th>
+      <th>Lastname</th>
+      <th>Email</th>
+      <th>Phone</th>
+    </tr>
+    <tr th:each="contact, status : ${contactForm.contacts}">
+      <td align="center" th:text="${status.count}"></td>
+      <td><input th:name="|contacts[${status.index}].firstname|" th:value="${contact.firstname}" /></td>
+      <td><input th:name="|contacts[${status.index}].lastname|" th:value="${contact.lastname}" /></td>
+      <td><input th:name="|contacts[${status.index}].email|" th:value="${contact.email}" /></td>
+      <td><input th:name="|contacts[${status.index}].phone|" th:value="${contact.phone}" /></td>
+    </tr>
+  </table>
+  <br/>
+  <button type="submit">Save</button>
+</form>

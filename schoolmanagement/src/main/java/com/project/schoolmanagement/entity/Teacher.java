@@ -55,14 +55,14 @@ public class Teacher {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password")
     private String password;
 
     //relationship with Class entity
-    @OneToOne(mappedBy = "teacher")
+    @OneToOne(mappedBy = "teacher", fetch = FetchType.LAZY)
     private Class clazz;
 
     //relationship with Subject entity

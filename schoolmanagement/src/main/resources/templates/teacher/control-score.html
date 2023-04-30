@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quan ly diem</title>
+    <!-- Bootstrap CSS v5.2.1 -->
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"-->
+    <!--          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">-->
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<header th:replace="~{fragments/navigation-teacher.html :: navigation}"></header>
+
+<div class="masthead bg-primary text-white text-center align-content-center">
+    <main class="align-content-center">
+        <h1>quan ly diem</h1>
+        <form th:action="@{/giao-vien/quan-ly-diem/luu}"
+              method="post" th:object="${gradeForm}">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Họ Tên</th>
+                    <th>Điểm</th>
+                    <th hidden="hidden"/>
+                    <th hidden="hidden"/>
+                </tr>
+                <tr th:each="gradeDto, interation : *{grades}">
+                    <td th:text="${gradeDto.studentName}"></td>
+                    <td>
+                        <input type="number" step="0.01" min="0" max="10" oninput="checkInputValue(this)"
+                               th:field="*{grades[__${interation.index}__].grade}">
+                    </td>
+                    <td hidden="hidden">
+                        <input th:field="*{grades[__${interation.index}__].student_id}">
+                    </td>
+                    <td hidden="hidden">
+                        <input th:field="*{grades[__${interation.index}__].grade_id}">
+                    </td>
+                </tr>
+            </table>
+            <button class="btn btn-secondary" type="submit">Lưu</button>
+        </form>
+    </main>
+</div>
+
+<div th:replace="~{fragments/copyright.html :: copyright}"/>
+<script>
+    function checkInputValue(input) {
+        if (input.value > 10) {
+            input.value = 10;
+        } else if (input.value < 0) {
+            input.value = 0;
+        }
+    }
+</script>
+</body>
+</html>

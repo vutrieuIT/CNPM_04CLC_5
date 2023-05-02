@@ -78,8 +78,8 @@ public class Student {
     private List<Absence> absences;
 
     public enum Gender {
-        MALE,
-        FEMALE
+        NAM,
+        NỮ
     }
 
 }

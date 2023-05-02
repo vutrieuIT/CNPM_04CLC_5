@@ -65,7 +65,7 @@ public class HomeController {
 
                     session = request.getSession();
                     session.setAttribute("student", student);
-
+                    ra.addFlashAttribute("message", "Xin chào " + student.getName() + "!");
                     return "redirect:/student/home";
                 } else {
                     ra.addFlashAttribute("message_error", "Tài khoản sinh viên không tồn tại!");

@@ -1,0 +1,67 @@
+<!-- student-profile-form.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/common/layout :: layout}">
+
+<head></head>
+
+<main th:fragment="content">
+  <div class="container head-sm">
+    <div th:fragment="alert" th:if="${message}" class="alert alert-primary" role="alert">
+      <span th:text="${message}"></span>
+    </div>
+
+    <div th:fragment="alert-danger" th:if="${message_error}" class="alert alert-danger" role="alert">
+      <span th:text="${message_error}"></span>
+    </div>
+
+    <h2>Thông tin học sinh</h2>
+    <ul>
+      <li>
+        <p th:text="'Mã học sinh: ' + ${student.student_id}"></p>
+      </li>
+      <li>
+        <p th:text="'Mã Lớp: ' + ${student.clazz.class_id}"></p>
+      </li>
+      <li>
+        <p th:text="'Tên học sinh: ' + ${student.name}"></p>
+      </li>
+    </ul>
+
+    <h4>Thông tin cá nhân</h4>
+    <form method="post" th:object="${student}" action="/student/profile" class="needs-validation" novalidate>
+      <input type="hidden" th:field="*{student_id}" />
+      <input type="hidden" th:field="*{name}" />
+      <input type="hidden" th:field="*{username}" />
+      <input type="hidden" th:field="*{password}" />
+      <input type="hidden" th:field="*{clazz.class_id}" />
+      <div class="form-group">
+        <label for="dob">Ngày sinh:</label>
+        <input type="date" class="form-control" id="dob" name="dob" th:field="*{dob}" required>
+      </div>
+      <div class="form-group">
+        <label for="gender">Giới tính:</label>
+        <select class="form-control" id="gender" name="gender" required>
+          <option value="" disabled>Chọn giới tính</option>
+          <option value="NAM" th:attr="selected=${student.gender == 'NAM'}">NAM</option>
+          <option value="NỮ" th:attr="selected=${student.gender == 'NỮ'}">NỮ</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="address">Địa chỉ:</label>
+        <input type="text" class="form-control" id="address" name="address" placeholder="Nhập địa chỉ"
+          th:field="*{address}" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email" th:field="*{email}"
+          required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Số điện thoại:</label>
+        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Nhập số điện thoại"
+          th:field="*{phone}" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Lưu</button>
+    </form>
+  </div>
+</main>

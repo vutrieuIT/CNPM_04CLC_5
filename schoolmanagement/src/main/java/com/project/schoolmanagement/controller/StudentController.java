@@ -33,8 +33,7 @@ public class StudentController {
     public String showStudentHome(Model model, HttpSession session) {
         model.addAttribute("content", "student/student-home");
         model.addAttribute("pageTitle", "Student Home");
-        // Student student = (Student) session.getAttribute("student");
-        // System.out.println(student);
+
         return "student/student-home";
     }
 
@@ -123,4 +122,48 @@ public class StudentController {
         }
     }
 
+    // Display the form of editing the profile of the student.
+    @GetMapping("/profile")
+    public String showFormEditProfile(Model model, HttpSession session) {
+        try {
+            Student student = session.getAttribute("student") != null ? (Student) session.getAttribute("student")
+                    : null;
+            if (student == null) {
+                System.out.println("get student from session failed");
+                return "redirect:/student/home";
+            } else {
+                model.addAttribute("student", student);
+                model.addAttribute("content", "student/student-profile-form");
+            }
+            System.out.println("showFormEditProfile  SUCCESS");
+            return "/student/student-profile-form";
+        } catch (Exception e) {
+            System.out.println("Error in showFormEditProfile()");
+            return "redirect:/student/home";
+        }
+    }
+
+    // Handle the information submitted by Student about profile.
+    @PostMapping("/profile")
+    public String handleProfileSubmitForm(Model model,
+            HttpSession session,
+            @ModelAttribute("student") Student updatedStudent,
+            RedirectAttributes ra) {
+        try {
+            System.out.println("----------------id: " + updatedStudent.getStudent_id());
+            System.out.println("----------------name: " + updatedStudent.getName());
+            studentService.save(updatedStudent);
+            System.out.println("save st  SUCCESS");
+
+            session.setAttribute("student", updatedStudent);
+            
+            System.out.println("handleProfileSubmitForm  SUCCESS");
+            ra.addFlashAttribute("message", "Cập nhật thông tin thành công");
+            return "redirect:/student/home";
+
+        } catch (Exception e) {
+            System.out.println("Error in handleProfileSubmitForm()");
+            return "redirect:/student/home";
+        }
+    }
 }

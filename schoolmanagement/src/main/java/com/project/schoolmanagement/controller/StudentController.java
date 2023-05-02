@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.schoolmanagement.entity.Absence;
 import com.project.schoolmanagement.entity.Grade;
@@ -25,7 +26,6 @@ public class StudentController {
 
     @Autowired
     private IStudentService studentService;
-    // !!!
     @Autowired
     private IAbsenceService absenceService;
 
@@ -55,7 +55,7 @@ public class StudentController {
                 System.out.println("Error in getAbsences()");
                 return "redirect:/student/home";
             }
-            
+
         } catch (Exception e) {
             return "redirect:/student/home";
         }
@@ -96,6 +96,31 @@ public class StudentController {
         model.addAttribute("student_id", student_id);
 
         return "/student/student-grade-list";
+    }
+
+    // Display the list of grades for the student.
+    @GetMapping("/grades/list")
+    public String showListGradesOfStudent(Model model, HttpSession session, RedirectAttributes ra) {
+        try {
+            Student student = session.getAttribute("student") != null ? (Student) session.getAttribute("student")
+                    : null;
+            if (student == null) {
+                System.out.println("get student from session failed");
+                return "redirect:/student/home";
+            } else {
+                List<Grade> grades = student.getGrades();
+
+                model.addAttribute("averages", studentService.calculateAverageOfGroupGradesBySubject(grades));
+                model.addAttribute("grades", studentService.groupGradesBySubject(grades));
+                model.addAttribute("student_id", student.getStudent_id());
+            }
+            System.out.println("showListGradesOfStudent  SUCCESS");
+            return "/student/student-grade-list";
+        } catch (Exception e) {
+            System.out.println("Error in showListGradesOfStudent()");
+            ra.addFlashAttribute("message_error", "get Error in showListGradesOfStudent()");
+            return "redirect:/student/home";
+        }
     }
 
 }

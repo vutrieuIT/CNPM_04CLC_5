@@ -29,12 +29,6 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public void getPoints(Long student_id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
-    }
-
-    @Override
     public Map<String, List<Grade>> groupGradesBySubject(List<Grade> grades) {
         return grades.stream().collect(Collectors.groupingBy(g -> g.getSubject().getName()));
     }

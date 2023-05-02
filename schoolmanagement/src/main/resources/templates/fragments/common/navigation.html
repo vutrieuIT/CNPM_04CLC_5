@@ -23,10 +23,19 @@
             
             <ul th:if="${session.student != null}" class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/student/absences/list}">Absences</a>
+                    <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/student/grades/list}">Grades</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-2 px-0 px-lg-3 rounded" href="/logout">Logout</a>
+                    <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/student/absences/list}">Absences</a>
+                </li>
+                <!-- show name of student when logged in -->
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-2 px-0 px-lg-3 rounded text-success"
+                        th:text="${session.student.name}"
+                        th:href="@{/student/home}"></a>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-2 px-0 px-lg-3 rounded text-danger" href="/logout">Logout</a>
                 </li>
 
             </ul>

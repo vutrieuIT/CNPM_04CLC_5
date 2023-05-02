@@ -42,14 +42,14 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/logout")
+    @GetMapping("logout")
     public String logout(RedirectAttributes ra, HttpSession session) {
         session.invalidate();
         ra.addFlashAttribute("message", "Đăng xuất thành công!");
         return "redirect:/";
     }
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public String handleLoginSubmit(
             @RequestParam String username,
             @RequestParam String password,
@@ -62,11 +62,6 @@ public class HomeController {
             if (userType.equals("student")) {
                 Student student = accountService.studentLogin(username, password);
                 if (student != null) {
-                    System.out.println("username + pass: " + username + ", " + password);
-                    System.out.println("student Username: " + student.getUsername());
-                    System.out.println("student Password: " + student.getPassword());
-                    System.out.println("student ID: " + student.getStudent_id());
-                    System.out.println("STUDENT NOT NULL");
 
                     session = request.getSession();
                     session.setAttribute("student", student);
@@ -80,7 +75,7 @@ public class HomeController {
 
             if (userType.equals("teacher")) {
                 if (accountService.teacherLogin(username, password)) {
-                    // TODO: redirect to teacher home page
+                    
                     Teacher teacher = teacherService.login(username, password);
                     ra.addFlashAttribute("teacher", teacher);
                     session.setAttribute("teacher", teacher);

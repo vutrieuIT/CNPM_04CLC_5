@@ -69,7 +69,7 @@ public class Student {
     private Class clazz;
 
     //relationship with Grade entity
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER, targetEntity = Grade.class)
     private List<Grade> grades;
 
     //relationship with Absence entity

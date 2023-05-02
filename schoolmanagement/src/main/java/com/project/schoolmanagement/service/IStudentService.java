@@ -3,8 +3,6 @@ package com.project.schoolmanagement.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-
 import com.project.schoolmanagement.entity.Grade;
 import com.project.schoolmanagement.entity.Student;
 
@@ -13,7 +11,7 @@ public interface IStudentService {
 
     void save(Student student);
 
-    void getPoints(Long student_id);
+    // List<Grade> getAllGrades(Long student_id);
 
     Map<String, List<Grade>> groupGradesBySubject(List<Grade> grades);
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.schoolmanagement.entity.Absence;
 import com.project.schoolmanagement.entity.Grade;
@@ -25,7 +26,6 @@ public class StudentController {
 
     @Autowired
     private IStudentService studentService;
-    // !!!
     @Autowired
     private IAbsenceService absenceService;
 
@@ -33,8 +33,7 @@ public class StudentController {
     public String showStudentHome(Model model, HttpSession session) {
         model.addAttribute("content", "student/student-home");
         model.addAttribute("pageTitle", "Student Home");
-        // Student student = (Student) session.getAttribute("student");
-        // System.out.println(student);
+
         return "student/student-home";
     }
 
@@ -55,7 +54,7 @@ public class StudentController {
                 System.out.println("Error in getAbsences()");
                 return "redirect:/student/home";
             }
-            
+
         } catch (Exception e) {
             return "redirect:/student/home";
         }
@@ -98,4 +97,73 @@ public class StudentController {
         return "/student/student-grade-list";
     }
 
+    // Display the list of grades for the student.
+    @GetMapping("/grades/list")
+    public String showListGradesOfStudent(Model model, HttpSession session, RedirectAttributes ra) {
+        try {
+            Student student = session.getAttribute("student") != null ? (Student) session.getAttribute("student")
+                    : null;
+            if (student == null) {
+                System.out.println("get student from session failed");
+                return "redirect:/student/home";
+            } else {
+                List<Grade> grades = student.getGrades();
+
+                model.addAttribute("averages", studentService.calculateAverageOfGroupGradesBySubject(grades));
+                model.addAttribute("grades", studentService.groupGradesBySubject(grades));
+                model.addAttribute("student_id", student.getStudent_id());
+            }
+            System.out.println("showListGradesOfStudent  SUCCESS");
+            return "/student/student-grade-list";
+        } catch (Exception e) {
+            System.out.println("Error in showListGradesOfStudent()");
+            ra.addFlashAttribute("message_error", "get Error in showListGradesOfStudent()");
+            return "redirect:/student/home";
+        }
+    }
+
+    // Display the form of editing the profile of the student.
+    @GetMapping("/profile")
+    public String showFormEditProfile(Model model, HttpSession session) {
+        try {
+            Student student = session.getAttribute("student") != null ? (Student) session.getAttribute("student")
+                    : null;
+            if (student == null) {
+                System.out.println("get student from session failed");
+                return "redirect:/student/home";
+            } else {
+                model.addAttribute("student", student);
+                model.addAttribute("content", "student/student-profile-form");
+            }
+            System.out.println("showFormEditProfile  SUCCESS");
+            return "/student/student-profile-form";
+        } catch (Exception e) {
+            System.out.println("Error in showFormEditProfile()");
+            return "redirect:/student/home";
+        }
+    }
+
+    // Handle the information submitted by Student about profile.
+    @PostMapping("/profile")
+    public String handleProfileSubmitForm(Model model,
+            HttpSession session,
+            @ModelAttribute("student") Student updatedStudent,
+            RedirectAttributes ra) {
+        try {
+            System.out.println("----------------id: " + updatedStudent.getStudent_id());
+            System.out.println("----------------name: " + updatedStudent.getName());
+            studentService.save(updatedStudent);
+            System.out.println("save st  SUCCESS");
+
+            session.setAttribute("student", updatedStudent);
+            
+            System.out.println("handleProfileSubmitForm  SUCCESS");
+            ra.addFlashAttribute("message", "Cập nhật thông tin thành công");
+            return "redirect:/student/home";
+
+        } catch (Exception e) {
+            System.out.println("Error in handleProfileSubmitForm()");
+            return "redirect:/student/home";
+        }
+    }
 }

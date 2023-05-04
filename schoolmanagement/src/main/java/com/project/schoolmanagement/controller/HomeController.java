@@ -2,7 +2,11 @@ package com.project.schoolmanagement.controller;
 
 import java.util.List;
 
+import com.project.schoolmanagement.entity.Class;
 import com.project.schoolmanagement.entity.Teacher;
+import com.project.schoolmanagement.repository.ScheduleRepository;
+import com.project.schoolmanagement.service.IClassService;
+import com.project.schoolmanagement.service.IScheduleService;
 import com.project.schoolmanagement.service.ITeacherService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +36,12 @@ public class HomeController {
 
     @Autowired
     private ITeacherService teacherService;
+
+    @Autowired
+    private IScheduleService scheduleService;
+
+    @Autowired
+    private IClassService classService;
 
     @GetMapping("/")
     public String showHome(Model model) {
@@ -116,5 +126,22 @@ public class HomeController {
             System.out.println(absence.getStudent().getName());
         }
         return "home";
+    }
+
+    // xem thoi khoa bieu
+    @GetMapping("/thoi-khoa-bieu")
+    public String TKG(@RequestParam(value = "lop", required = false) Long class_id, Model model){
+        if (class_id != null){
+            String[][] schedule = scheduleService.findScheduleByClassId(class_id);
+            String className = classService.findClassNameById(class_id);
+            model.addAttribute("className", className);
+            model.addAttribute("tkb", schedule);
+            return "thoi-khoa-bieu";
+        } else {
+            List<Class> classes = classService.findAllClass();
+            model.addAttribute("classes", classes);
+            return "danh-sanh-lop";
+        }
+
     }
 }

@@ -15,6 +15,9 @@
 
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-3 rounded"
                     href="#contact">Contact</a></li>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/thoi-khoa-bieu}">Timetable</a>
+                </li>
 
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-2 px-0 px-lg-3 rounded" href="#login">Login</a>
@@ -24,6 +27,9 @@
             <ul th:if="${session.student != null}" class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/student/absences/list}">Absences</a>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/thoi-khoa-bieu}">Timetable</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-2 px-0 px-lg-3 rounded" href="/logout">Logout</a>

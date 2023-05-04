@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css"/>
+</head>
+<header th:replace="~{fragments/common/navigation :: navigation}"></header>
+<body>
+<div class="masthead bg-primary text-white text-center align-content-center">
+    <main class="align-content-center">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Lớp</th>
+                <th>Xem thời khóa biểu</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="class : ${classes}">
+                <td>[[${class.name}]]</td>
+                <td>
+                    <a th:href="@{/thoi-khoa-bieu(lop=${class.class_id})}">
+                        <button>xem</button>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+<div th:replace="~{fragments/common/copyright.html :: copyright}"/>
+</body>
+</html>

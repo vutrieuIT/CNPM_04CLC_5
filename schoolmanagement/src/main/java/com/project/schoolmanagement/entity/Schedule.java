@@ -27,12 +27,12 @@ public class Schedule {
     private Long schedule_id;
 
     // @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "startTime")
-    private Time startTime;
+    @Column(name = "thu")
+    private Integer thu;
     
     // @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "endTime")
-    private Time endTime;
+    @Column(name = "tiet")
+    private Integer tiet;
 
     @ManyToOne(targetEntity = Assign.class)
     @JoinColumn(name = "assign_id", referencedColumnName = "assign_id", foreignKey = @ForeignKey(name = "FK_assign_schedule"))

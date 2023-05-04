@@ -17,4 +17,8 @@ public interface ClassRepository extends JpaRepository<Class, Long> {
             "FROM Assign a JOIN a.clazz c JOIN a.subject s " +
             "where a.teacher.teacher_id = :teacher_id")
     List<Object[]> findClassesByTeacherId(@Param("teacher_id") Long teacher_id);
+
+
+    @Query("select c from Class c where c.class_id = ?1")
+    Class findByClass_id(Long class_id);
 }

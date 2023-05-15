@@ -16,6 +16,14 @@ public interface IStudentService {
     Map<String, List<Grade>> groupGradesBySubject(List<Grade> grades);
 
     Map<String, Double> calculateAverageOfGroupGradesBySubject(List<Grade> grades);
+    Map<String, String> calculateAverageOfGroupGradesBySubject2(List<Grade> grades);
 
     Student findStudentByUsernameAndPassword(String username, String password);
+
+    // getGradeById
+    Grade getGradeById(Long id);
+
+    Grade saveGrade(Grade grade);
+
+    List<Grade> getAllGradesOfStudent(Long student_id);
 }

@@ -7,14 +7,19 @@
 <body>
     <main th:fragment="content">
         <div class="container w-25 mx-auto head-sm">
+
             <h2>Thông tin xin nghỉ</h2>
+            <div th:fragment="alert-danger" th:if="${message_error}" class="alert alert-danger" role="alert">
+                <span th:text="${message_error}"></span>
+            </div>
             <hr>
-            <form action="#" th:action="@{/student/absences/{id}/add (id=${student_id})}" th:object="${absence}" method="post" class="was-validated">
+            <form action="#" th:action="@{/student/absences/{id}/add (id=${student_id})}" th:object="${absence}"
+                method="post" class="was-validated">
                 <input type="hidden" name="" th:field="*{absence_id}" th:value="${absence.absence_id}">
                 <div class="mb-3">
                     <label for="startDate" class="form-label">Ngày bắt đầu</label>
                     <input required th:field="*{startDate}" type="date" name="startDate" id="startDate"
-                        class="form-control" placeholder="" aria-describedby="helpId">
+                        class="form-control" placeholder="" aria-describedby="helpId" min="2023-04-12" max="2023-05-31">
                     <small id="helpId" class="text-muted">Chọn ngày bắt đầu nghỉ</small>
                 </div>
 

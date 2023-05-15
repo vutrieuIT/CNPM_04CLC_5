@@ -14,4 +14,8 @@ public interface GradeRepository extends JpaRepository<Grade, Long>{
             "WHERE s.clazz.class_id = :class_id " +
             "AND (g.subject.subject_id = :subject_id OR g.subject.subject_id is null)")
     List<Object[]> getScoreTable(@Param("class_id") Long class_id,@Param("subject_id") Long subject_id);
+
+    @Query("SELECT g FROM Grade g WHERE g.student.student_id = :student_id")
+    //SELECT * FROM grade g WHERE g.student_id = 2
+    List<Grade> getAllGrades(Long student_id);
 }

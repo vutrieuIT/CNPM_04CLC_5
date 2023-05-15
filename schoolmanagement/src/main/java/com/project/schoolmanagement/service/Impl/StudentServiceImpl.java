@@ -1,5 +1,6 @@
 package com.project.schoolmanagement.service.Impl;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.schoolmanagement.entity.Grade;
 import com.project.schoolmanagement.entity.Student;
+import com.project.schoolmanagement.repository.GradeRepository;
 import com.project.schoolmanagement.repository.StudentRepository;
 import com.project.schoolmanagement.service.IStudentService;
 
@@ -17,6 +19,9 @@ public class StudentServiceImpl implements IStudentService {
 
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    GradeRepository gradeRepository;
 
     @Override
     public Student getReferenceById(Long student_id) {
@@ -40,6 +45,17 @@ public class StudentServiceImpl implements IStudentService {
                         Collectors.averagingDouble(Grade::getPoint)));
     }
 
+    public Map<String, String> calculateAverageOfGroupGradesBySubject2(List<Grade> grades) {
+        DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+        return grades.stream()
+                .collect(Collectors.groupingBy(g -> g.getSubject().getName(),
+                        Collectors.averagingDouble(Grade::getPoint)))
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> decimalFormat.format(e.getValue())));
+    }
+
+
     public Student findStudentByUsernameAndPassword(String username, String password) {
         // Duyệt qua danh sách các Student trong students
         List<Student> students = studentRepository.findAll();
@@ -53,5 +69,22 @@ public class StudentServiceImpl implements IStudentService {
         // Nếu không tìm thấy student tương ứng, trả về null
         return null;
     }
+
+    @Override
+    public Grade getGradeById(Long id) {
+        return gradeRepository.findById(id).get();
+    }
+
+    @Override
+    public Grade saveGrade(Grade grade) {
+        return gradeRepository.save(grade);
+    }
+
+    @Override
+    public List<Grade> getAllGradesOfStudent(Long student_id) {
+        return gradeRepository.getAllGrades(student_id);
+    }
+
+    
 
 }

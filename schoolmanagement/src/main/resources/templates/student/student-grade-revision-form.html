@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/common/layout :: layout}">
+
+<head>
+</head>
+
+<body>
+    <main th:fragment="content">
+        <div class="container head-sm">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Điểm</th>
+                            <th scope="col">Mô tả</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="">
+                            <td scope="row" th:text="${grade.grade_id}"></td>
+                            <td th:text="${grade.point}"></td>
+                            <td th:text="${grade.description}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <form action="#" th:action="@{/student/grades/revision/{id} (id=${grade.grade_id})}"
+                    th:object="${grade}" method="post">
+                    <div class="mb-3">
+                        <label for="revision" class="form-label">Nội dung phúc khảo</label>
+                        <textarea required th:field="*{revision}" class="form-control" name="revision" id="revision" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </form>
+
+            </div>
+
+        </div>
+    </main>
+</body>
+
+</html>

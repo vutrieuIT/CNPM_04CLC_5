@@ -29,6 +29,9 @@ public class Grade {
 
     @Column(name = "description")
     private String description;
+    
+    @Column(name = "revision", nullable = true)
+    private String revision;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "student_id", referencedColumnName = "student_id", foreignKey = @ForeignKey(name = "FK_students_grades"))

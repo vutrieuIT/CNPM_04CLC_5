@@ -26,14 +26,11 @@
     <!-- Navigation-->
     <div th:replace="~{fragments/common/navigation :: navigation}"></div>
 
-
     <!-- <main th:replace="~{'fragments/content/'+${content} :: content}"> -->
     <main th:replace="~{${content} :: content}">
+        <h1>BASE content</h1>
         <!-- Child templates will populate this section -->
     </main>
-    
-    
-    
 
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

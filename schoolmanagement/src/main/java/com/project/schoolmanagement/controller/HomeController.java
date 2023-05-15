@@ -2,13 +2,6 @@ package com.project.schoolmanagement.controller;
 
 import java.util.List;
 
-import com.project.schoolmanagement.entity.Class;
-import com.project.schoolmanagement.entity.Teacher;
-import com.project.schoolmanagement.repository.ScheduleRepository;
-import com.project.schoolmanagement.service.IClassService;
-import com.project.schoolmanagement.service.IScheduleService;
-import com.project.schoolmanagement.service.ITeacherService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.schoolmanagement.entity.Absence;
+import com.project.schoolmanagement.entity.Class;
 import com.project.schoolmanagement.entity.Student;
+import com.project.schoolmanagement.entity.Teacher;
 import com.project.schoolmanagement.repository.StudentRepository;
 import com.project.schoolmanagement.service.IAccountService;
+import com.project.schoolmanagement.service.IClassService;
+import com.project.schoolmanagement.service.IScheduleService;
+import com.project.schoolmanagement.service.ITeacherService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -70,6 +68,7 @@ public class HomeController {
             HttpServletRequest request) {
         try {
             if (userType.equals("student")) {
+                System.out.println("Student login");
                 Student student = accountService.studentLogin(username, password);
                 if (student != null) {
 
@@ -85,7 +84,7 @@ public class HomeController {
 
             if (userType.equals("teacher")) {
                 if (accountService.teacherLogin(username, password)) {
-                    
+
                     Teacher teacher = teacherService.login(username, password);
                     ra.addFlashAttribute("teacher", teacher);
                     session.setAttribute("teacher", teacher);
@@ -125,8 +124,8 @@ public class HomeController {
 
     // xem thoi khoa bieu
     @GetMapping("/thoi-khoa-bieu")
-    public String TKG(@RequestParam(value = "lop", required = false) Long class_id, Model model){
-        if (class_id != null){
+    public String TKG(@RequestParam(value = "lop", required = false) Long class_id, Model model) {
+        if (class_id != null) {
             String[][] schedule = scheduleService.findScheduleByClassId(class_id);
             String className = classService.findClassNameById(class_id);
             model.addAttribute("className", className);

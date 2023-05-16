@@ -71,7 +71,6 @@ public class HomeController {
                 System.out.println("Student login");
                 Student student = accountService.studentLogin(username, password);
                 if (student != null) {
-
                     session = request.getSession();
                     session.setAttribute("student", student);
                     ra.addFlashAttribute("message", "Xin chào " + student.getName() + "!");
@@ -83,9 +82,8 @@ public class HomeController {
             }
 
             if (userType.equals("teacher")) {
-                if (accountService.teacherLogin(username, password)) {
-
-                    Teacher teacher = teacherService.login(username, password);
+                Teacher teacher = accountService.teacherLogin(username, password);
+                if (teacher != null) {
                     ra.addFlashAttribute("teacher", teacher);
                     session.setAttribute("teacher", teacher);
                     return "redirect:/giao-vien";

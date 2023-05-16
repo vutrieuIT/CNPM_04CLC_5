@@ -1,5 +1,6 @@
 package com.project.schoolmanagement.service.Impl;
 
+import com.project.schoolmanagement.entity.Teacher;
 import com.project.schoolmanagement.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,12 +33,9 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public boolean teacherLogin(String username, String password) {
-        if (teacherRepository.findByUsernameAndPassword(username,password) != null) {
-            return true;
-        } else {
-            return false;
-        }
+    public Teacher teacherLogin(String username, String password) {
+        Teacher teacher = teacherRepository.findByUsernameAndPassword(username, password);
+        return teacher;
     }
 
     @Override

@@ -8,13 +8,23 @@
     <!--          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">-->
     <!-- Core theme CSS (includes Bootstrap)-->
     <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css"/>
+    <style>
+        .message {
+            display: none;
+            font-size: 20px;
+            position: fixed;
+            top: 140px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
 <body>
 <header th:replace="~{fragments/navigation-teacher.html :: navigation}"></header>
 
 <div class="masthead bg-primary text-white text-center align-content-center">
     <main class="align-content-center">
-        <h1>quan ly diem</h1>
+        <h1>Quản Lý Điểm lớp [[${class_name}]], môn [[${subject_name}]]</h1>
         <form th:action="@{/giao-vien/quan-ly-diem/luu}"
               method="post" th:object="${gradeForm}">
             <table class="table table-bordered">
@@ -38,10 +48,27 @@
                     </td>
                 </tr>
             </table>
-            <button class="btn btn-secondary" type="submit">Lưu</button>
+            <button class="btn btn-secondary" type="submit" >Lưu</button>
         </form>
     </main>
 </div>
+
+<div class="message alert alert-success" id="message" th:text="${message}"></div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var message = /*[[${message}]]*/ null;
+
+    if (message) {
+        var messageElement = document.getElementById("message");
+        messageElement.style.display = "block";
+
+        setTimeout(function () {
+            messageElement.style.display = "none";
+        }, 5000);
+    }
+    /*]]>*/
+</script>
 
 <div th:replace="~{fragments/common/copyright.html :: copyright}"/>
 <script>
@@ -52,6 +79,7 @@
             input.value = 0;
         }
     }
+
 </script>
 </body>
 </html>

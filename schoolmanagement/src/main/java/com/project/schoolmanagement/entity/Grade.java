@@ -24,7 +24,7 @@ public class Grade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long grade_id;
 
-    @Column(name = "point")
+    @Column(name = "point", nullable = true)
     private Float point;
 
     @Column(name = "description")

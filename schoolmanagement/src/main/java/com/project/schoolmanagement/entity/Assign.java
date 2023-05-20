@@ -45,4 +45,6 @@ public class Assign {
     @OneToMany(mappedBy = "assign")
     private List<Schedule> schedules;
 
+    @OneToMany(mappedBy = "assign")
+    private List<Notification> notifications;
 }

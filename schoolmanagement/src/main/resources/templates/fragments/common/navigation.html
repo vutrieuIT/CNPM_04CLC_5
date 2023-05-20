@@ -11,28 +11,28 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul th:if="${session.student == null}" class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-3 rounded"
-                    href="#about">About</a></li>
+                    href="#about">Giới thiệu</a></li>
 
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-3 rounded"
-                    href="#contact">Contact</a></li>
+                    href="#contact">Liên hệ</a></li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/thoi-khoa-bieu}">Timetable</a>
+                    <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/thoi-khoa-bieu}">Thời khóa biểu</a>
                 </li>
 
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-2 px-0 px-lg-3 rounded" href="#login">Login</a>
+                    <a class="nav-link py-2 px-0 px-lg-3 rounded" href="#login">Đăng nhập</a>
                 </li>
             </ul>
             
             <ul th:if="${session.student != null}" class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/student/grades/list}">Grades</a>
+                    <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/student/grades/list}">Xem điểm</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/thoi-khoa-bieu}">Timetable</a>
+                    <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/thoi-khoa-bieu}">Thời khóa biểu</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/student/absences/list}">Absences</a>
+                    <a class="nav-link py-2 px-0 px-lg-3 rounded" th:href="@{/student/absences/list}">Xin nghỉ</a>
                 </li>
                 <!-- show name of student when logged in -->
                 <li class="nav-item mx-0 mx-lg-1">
@@ -41,7 +41,7 @@
                         th:href="@{/student/home}"></a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-2 px-0 px-lg-3 rounded text-danger" href="/logout">Logout</a>
+                    <a class="nav-link py-2 px-0 px-lg-3 rounded text-danger" href="/logout">Đăng xuất</a>
                 </li>
 
             </ul>

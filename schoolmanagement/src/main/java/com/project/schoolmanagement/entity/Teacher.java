@@ -1,6 +1,7 @@
 package com.project.schoolmanagement.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import com.project.schoolmanagement.entity.Student.Gender;
 
@@ -15,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -69,6 +71,9 @@ public class Teacher {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id", referencedColumnName = "subject_id", foreignKey = @ForeignKey(name = "FK_subjects_teachers"))
     private Subject subject;
+
+    @OneToMany(mappedBy = "teacher", targetEntity = Assign.class)
+    private List<Assign> assigns;
 }
 
 /*

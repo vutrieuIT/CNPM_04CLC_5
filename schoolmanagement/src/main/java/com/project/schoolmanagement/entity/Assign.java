@@ -30,15 +30,15 @@ public class Assign {
     private String description;
 
     // relationship with Class entity
-    @ManyToOne(targetEntity = Class.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Class.class, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "class_id", referencedColumnName = "class_id")
     private Class clazz;
     // relationship with Subject entity
-    @ManyToOne(targetEntity = Subject.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Subject.class, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "subject_id", referencedColumnName = "subject_id")
     private Subject subject;
     // relationship with Teacher entity
-    @ManyToOne(targetEntity = Teacher.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Teacher.class, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "teacher_id", referencedColumnName = "teacher_id")
     private Teacher teacher;
 

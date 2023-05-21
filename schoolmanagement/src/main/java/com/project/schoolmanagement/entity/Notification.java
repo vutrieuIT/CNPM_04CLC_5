@@ -20,7 +20,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "notifications")
+@Table(name = "notification")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,7 +30,6 @@ public class Notification {
     private Long notificationId;
 
     @Column(name = "title")
-
     private String title;
 
     @Column(name = "content")

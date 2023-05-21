@@ -33,4 +33,6 @@ public class Subject {
     @OneToMany(mappedBy = "subject")
     private List<Grade> grades;
 
+    @OneToMany(mappedBy = "subject", targetEntity = Assign.class)
+    private List<Assign> assigns;
 }

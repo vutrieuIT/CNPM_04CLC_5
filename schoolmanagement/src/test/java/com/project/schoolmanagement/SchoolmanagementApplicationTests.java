@@ -2,7 +2,6 @@ package com.project.schoolmanagement;
 
 import com.project.schoolmanagement.entity.Class;
 import com.project.schoolmanagement.repository.ScheduleRepository;
-import com.project.schoolmanagement.repository.SubjectRepository;
 import com.project.schoolmanagement.service.IClassService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,15 @@ import java.util.List;
 class SchoolmanagementApplicationTests {
 
 	@Autowired
-	private SubjectRepository subjectRepository;
+	private IClassService classService;
 
 	@Test
 	void contextLoads() {
-		System.out.println(subjectRepository.getNameById(1L));
+		List<Class> classes = classService.findAllClass();
+		for (Class c:classes){
+			System.out.print(c.getClass_id());
+			System.out.println(c.getName());
+		}
 	}
 
 }

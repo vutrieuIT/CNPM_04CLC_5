@@ -32,9 +32,13 @@ public class Class {
     private String name;
 
     //relationship with Student entity
-    @OneToMany(mappedBy = "clazz")
+    @OneToMany(mappedBy = "clazz", targetEntity = Student.class)
     @JsonIgnore
     private List<Student> students;
+    
+    @OneToMany(mappedBy = "clazz", targetEntity = Assign.class)
+    @JsonIgnore
+    private List<Assign> assigns;
 
     @OneToOne(optional = true)
     @JoinColumn(name = "teacher_id", referencedColumnName = "teacher_id", foreignKey = @ForeignKey(name = "FK_teachers_classes"))

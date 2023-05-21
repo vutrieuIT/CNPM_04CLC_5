@@ -6,6 +6,7 @@ import com.project.schoolmanagement.entity.Schedule;
 import com.project.schoolmanagement.entity.Subject;
 import com.project.schoolmanagement.entity.Teacher;
 import com.project.schoolmanagement.form.GradeForm;
+import com.project.schoolmanagement.form.NotificationForm;
 import com.project.schoolmanagement.repository.SubjectRepository;
 import com.project.schoolmanagement.service.IClassService;
 import com.project.schoolmanagement.service.IGradeService;
@@ -27,7 +28,7 @@ import java.util.List;
 public class TeacherController {
 
     @Autowired
-    private ITeacherService ITeacherService;
+    private ITeacherService teacherService;
 
     @Autowired
     private IGradeService gradeService;
@@ -61,7 +62,7 @@ public class TeacherController {
     public String getClassList(Model model, HttpSession session){
         Teacher teacher = (Teacher) session.getAttribute("teacher");
         List<ClassSubjectByTeacherIdDTO> dslop = new ArrayList<>();
-        dslop = ITeacherService.getDanhSachLop(teacher.getTeacher_id());
+        dslop = teacherService.getDanhSachLop(teacher.getTeacher_id());
         model.addAttribute("teacher", teacher);
         model.addAttribute("danhSach",dslop);
         return "/teacher/score";
@@ -104,4 +105,43 @@ public class TeacherController {
             return null;
         }
     }
+
+    // thong bao
+    @GetMapping("/thong-bao")
+    public String getNotification(Model model, HttpSession session){
+        Teacher teacher = (Teacher) session.getAttribute("teacher");
+        List<ClassSubjectByTeacherIdDTO> dslop = new ArrayList<>();
+        dslop = teacherService.getDanhSachLop(teacher.getTeacher_id());
+        List<NotificationForm> notificationForm = teacherService.getNotifies(teacher.getTeacher_id());
+        model.addAttribute("notificationForm", notificationForm);
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("danhSach",dslop);
+        return "/teacher/notification";
+    }
+    @GetMapping("/form-thong-bao")
+    public String writeNotification(@RequestParam(name = "class_id") Long class_id,
+                                @RequestParam(name = "subject_id") Long subject_id,
+                                Model model, HttpSession session){
+        Teacher teacher = (Teacher) session.getAttribute("teacher");
+        model.addAttribute("teacher", teacher);
+        NotificationForm notificationForm = new NotificationForm();
+        notificationForm.setClass_id(class_id);
+        notificationForm.setSubject_id(subject_id);
+        notificationForm.setClassName(classService.findClassNameById(class_id));
+        notificationForm.setSubjectName(subjectRepository.getNameById(subject_id));
+        model.addAttribute("notificationForm", notificationForm);
+        session.setAttribute("subject_id", subject_id);
+        session.setAttribute("class_id", class_id);
+        return "/teacher/form-notification";
+    }
+
+    @PostMapping("/post-thong-bao")
+    public String postThongBao(@ModelAttribute NotificationForm notificationForm,
+                            HttpSession session) {
+        Teacher teacher = (Teacher) session.getAttribute("teacher");
+        teacherService.saveNotify(notificationForm.getMessage(), notificationForm.class_id,
+                notificationForm.subject_id, teacher.getTeacher_id());
+        return "redirect:/giao-vien/thong-bao";
+    }
+
 }

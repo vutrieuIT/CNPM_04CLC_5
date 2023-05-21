@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quan ly diem</title>
+    <!-- Bootstrap CSS v5.2.1 -->
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"-->
+    <!--          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">-->
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<header th:replace="~{fragments/navigation-teacher.html :: navigation}"></header>
+
+<div class="masthead bg-primary text-white text-center align-content-center">
+    <main class="align-content-center">
+        <h1>Thông báo</h1>
+        <table class="table table-bordered">
+            <tr>
+                <th>Môn học</th>
+                <th>lớp</th>
+                <th>thông báo</th>
+            </tr>
+            <tr th:each="data : ${danhSach}">
+                <td>[[${data.subjectName}]]</td>
+                <td>[[${data.className}]]</td>
+                <td>
+                    <a th:href="@{/giao-vien/form-thong-bao(class_id=${data.class_id}, subject_id=${data.subject_id})}">
+                        <button class="btn btn-secondary">Thông báo</button>
+                    </a>
+                </td>
+            </tr>
+        </table>
+        <h1>Lịch sử thông báo</h1>
+        <table class="table table-bordered">
+            <tr>
+                <th>Môn</th>
+                <th>Lớp</th>
+                <th>Thời gian</th>
+                <th>Thông báo</th>
+            </tr>
+            <tr th:each="notify : ${notificationForm}">
+                <td th:text="${notify.subjectName}"></td>
+                <td th:text="${notify.className}"></td>
+                <td th:text="${notify.date}"></td>
+                <th th:text="${notify.message}"></th>
+            </tr>
+        </table>
+    </main>
+</div>
+
+<div th:replace="~{fragments/common/copyright.html :: copyright}"/>
+</body>
+</html>

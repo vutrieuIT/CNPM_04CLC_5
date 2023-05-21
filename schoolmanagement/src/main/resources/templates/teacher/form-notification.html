@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quan ly diem</title>
+    <!-- Bootstrap CSS v5.2.1 -->
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"-->
+    <!--          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">-->
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<header th:replace="~{fragments/navigation-teacher.html :: navigation}"></header>
+
+<div class="masthead bg-primary text-white text-center align-content-center">
+    <main class="align-content-center">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <h1>Thông báo</h1>
+                    <form th:object="${notificationForm}" th:action="@{/giao-vien/post-thong-bao}" method="post">
+                        <p th:text="*{className}"></p>
+                        <p th:text="*{subjectName}"></p>
+                        <input type="hidden" th:field="*{class_id}">
+                        <input type="hidden" th:field="*{subject_id}">
+                        <div class="form-group">
+                            <label>Nội dung:</label>
+                            <textarea class="form-control" th:field="*{message}"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Gửi</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div th:replace="~{fragments/common/copyright.html :: copyright}"/>
+</body>
+</html>

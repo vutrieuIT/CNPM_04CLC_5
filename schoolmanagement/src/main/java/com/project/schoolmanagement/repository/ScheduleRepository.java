@@ -15,5 +15,10 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long>{
             "join a.subject sj " +
             "where a.clazz.class_id = ?1")
     List<Object[]> findSubjectName(Long class_id);
-    
+
+    @Query("SELECT s.thu, s.tiet, cl.name FROM Schedule s " +
+            "JOIN s.assign a " +
+            "JOIN a.clazz cl " +
+            "WHERE a.teacher.teacher_id = ?1")
+    List<Object[]> findSchedulesByTeacherId(Long teacherId);
 }

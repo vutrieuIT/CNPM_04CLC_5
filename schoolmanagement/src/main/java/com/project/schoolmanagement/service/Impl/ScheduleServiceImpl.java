@@ -1,5 +1,6 @@
 package com.project.schoolmanagement.service.Impl;
 
+import com.project.schoolmanagement.entity.Schedule;
 import com.project.schoolmanagement.repository.ScheduleRepository;
 import com.project.schoolmanagement.service.IScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,19 @@ public class ScheduleServiceImpl implements IScheduleService {
             Integer tiet = (Integer) object[1];
             String tenmon = (String) object[2];
             schedule[tiet-1][thu-2] = tenmon;
+        }
+        return schedule;
+    }
+
+    @Override
+    public String[][] findScheduleByTeacherId(Long teacherId) {
+        String[][] schedule = new String[5][6];
+        List<Object[]> list = scheduleRepository.findSchedulesByTeacherId(teacherId);
+        for (Object[] object : list){
+            Integer thu = (Integer) object[0];
+            Integer tiet = (Integer) object[1];
+            String tenlop = (String) object[2];
+            schedule[tiet-1][thu-2] = tenlop;
         }
         return schedule;
     }

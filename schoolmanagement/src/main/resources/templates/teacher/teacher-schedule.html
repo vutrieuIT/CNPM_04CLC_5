@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Schedule</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css"/>
+</head>
+<header th:replace="~{fragments/navigation-teacher.html :: navigation}"></header>
+<body>
+<div class="masthead bg-primary text-white text-center align-content-center">
+    <main class="align-content-center">
+        <h1>Thời khóa biểu Lớp [[${teacher.name}]]</h1>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th></th>
+                <th>thứ 2</th>
+                <th>thứ 3</th>
+                <th>Thứ 4</th>
+                <th>Thứ 5</th>
+                <th>Thứ 6</th>
+                <th>Thứ 7</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="row, inter : ${tkb}">
+                <th th:text="tiet +' ' +${inter.index+1}"></th>
+                <td th:each="cell : ${row}"  th:text="${cell}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>

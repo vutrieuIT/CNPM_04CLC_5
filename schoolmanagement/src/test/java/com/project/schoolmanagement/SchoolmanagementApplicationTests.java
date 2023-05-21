@@ -18,12 +18,12 @@ import java.util.List;
 class SchoolmanagementApplicationTests {
 
 	@Autowired
-	private ITeacherService teacherService;
+	private ScheduleRepository scheduleRepository;
 
 	@Test
 	void contextLoads() {
-		List<NotificationForm> forms = teacherService.getNotifies(1L);
-		System.out.println(forms.size());
+		List<Object[]> objects = scheduleRepository.findSchedulesByTeacherId(1L);
+
 	}
 
 }

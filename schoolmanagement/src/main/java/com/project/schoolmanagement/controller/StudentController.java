@@ -79,18 +79,22 @@ public class StudentController {
     public String handleSubmitFormAbsenceForAdd(
             @PathVariable("student_id") Long student_id,
             @ModelAttribute("absence") Absence absence,
-            Model model) {
+            Model model,
+            RedirectAttributes ra) {
 
         if (absence.getStartDate().compareTo(absence.getEndDate()) > 0) {
             model.addAttribute("message_error", "Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc");
             model.addAttribute("absence", absence);
             model.addAttribute("student_id", student_id);
+
             // model.addAttribute("content", "student/student-absence-form");
             return "/student/student-absence-form";
         }
 
         absence.setStudent(studentService.getReferenceById(student_id));
         absenceService.save(absence);
+
+        ra.addFlashAttribute("message", "Thêm ngày ngỉ thành công");
 
         return "redirect:/student/absences/list";
     }
@@ -147,10 +151,11 @@ public class StudentController {
 
     @PostMapping("/grades/revision/{id}")
     public String handleSubmitFormRevisionGrade(@PathVariable("id") Long id, @ModelAttribute("grade") Grade grade,
-            Model model) {
+            Model model, RedirectAttributes ra) {
         Grade grade_db = studentService.getGradeById(id);
         grade_db.setRevision(grade.getRevision());
         studentService.saveGrade(grade_db);
+        ra.addFlashAttribute("message", "Phúc khảo thành công");
         return "redirect:/student/grades/list";
     }
 

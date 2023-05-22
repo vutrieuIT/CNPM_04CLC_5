@@ -8,6 +8,9 @@
     <main th:fragment="content">
         <div class="container head-sm">
             <h2>Lịch sử xin nghỉ</h2>
+            <div th:fragment="alert" th:if="${message}" class="alert alert-primary" role="alert">
+                <span th:text="${message}"></span>
+            </div>
             <a class="btn btn-success btn-sm my-2" th:href="@{/student/absences/{id}/add (id=${student_id})}"
                 role="button">Thêm ngày nghỉ</a>
             <div class="table-responsive" style="max-height:none">
